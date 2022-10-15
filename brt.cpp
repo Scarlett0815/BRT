@@ -46,9 +46,7 @@ void NormalInsertion(){
         node[node_index].child[0] = node[node_index].child[1] = 0;
         node[node_index].parent = pre_node;
         node[node_index].dir = 0;
-        //cout << pre_node << endl;
     }
-    //cout << "root's lchild " << node[root].child[0] << endl;
     return;
 }
 
@@ -58,9 +56,8 @@ void Rotation(int temp_node){
         node[root].color = 0;
         return;
     }
+
     // no need for rotation
-    //cout << node[node[node[node[temp_node].parent].parent].child[1 - node[node[temp_node].parent].dir]].color << endl;
-    //cout << node[temp_node].parent << endl;
     if (node[node[temp_node].parent].color == 0)
         return;
     // consecutive red node occur
@@ -84,7 +81,6 @@ void Rotation(int temp_node){
         int pre_pre_parent = node[node[temp_node].parent].parent;
         // case a: A < B < C
         if (node[temp_node].dir == 0 && node[pre_parent].dir == 0){
-            //cout << "case2_a\n";
             node[pre_pre_parent].child[0] = node[pre_parent].child[1];
             node[pre_parent].dir = node[pre_pre_parent].dir;
             node[pre_parent].parent = node[pre_pre_parent].parent;
@@ -95,12 +91,10 @@ void Rotation(int temp_node){
             node[pre_parent].color = 0;
             node[pre_pre_parent].color = 1;
             if (pre_pre_parent == root) root = pre_parent;
-            //cout << node[root].color << endl;
             return;
         }
         //case b: A > B > C
         if (node[temp_node].dir == 1 && node[pre_parent].dir == 1){
-            //cout << "case2_b\n";
             node[pre_pre_parent].child[1] = node[pre_parent].child[0];
             node[pre_parent].dir = node[pre_pre_parent].dir;
             node[pre_parent].parent = node[pre_pre_parent].parent;
@@ -110,14 +104,11 @@ void Rotation(int temp_node){
             node[pre_pre_parent].parent = pre_parent;
             node[pre_parent].color = 0;
             node[pre_pre_parent].color = 1;
-            //cout << "root=" << root << endl;
             if (pre_pre_parent == root) root = pre_parent;
-            //cout << node[root].color << endl;
             return;
         }
         //case c: C > A > B
         if (node[temp_node].dir == 1 && node[pre_parent].dir == 0){
-            //cout << "case2_c\n";
             node[pre_pre_parent].child[0] = node[temp_node].child[1];
             node[pre_parent].child[1] = node[temp_node].child[0];
             node[temp_node].dir = node[pre_pre_parent].dir;
@@ -131,14 +122,11 @@ void Rotation(int temp_node){
             node[pre_pre_parent].dir = 1;
             node[temp_node].color = 0;
             node[pre_pre_parent].color = 1;
-            //cout << "root=" << root << endl;
             if (pre_pre_parent == root) root = temp_node;
-            //cout << node[root].color << endl;
             return;
         }
         //case d: C < A < B
         if (node[temp_node].dir == 0 && node[pre_parent].dir == 1){
-            //cout << "case2_d\n";
             node[pre_pre_parent].child[1] = node[temp_node].child[0];
             node[pre_parent].child[0] = node[temp_node].child[1];
             node[temp_node].dir = node[pre_pre_parent].dir;
@@ -153,11 +141,9 @@ void Rotation(int temp_node){
             node[temp_node].color = 0;
             node[pre_pre_parent].color = 1;
             if (pre_pre_parent == root) root = temp_node;
-            //cout << node[root].color << endl;
             return;
         }
     }
-    //cout << root << endl;
 }
 
 //tree create
@@ -172,8 +158,6 @@ void CreateTree(){
     while((ch = getchar()) != '\n'){
         ungetc(ch, stdin);
         cin >> node[1 + node_index ++].key;
-        //cout << node_index << endl;
-        //cout << node[node_index].key << endl;
         // initial the root
         if (node_index == 1){
             node[1].parent = 0;
@@ -187,10 +171,8 @@ void CreateTree(){
             // the color of the insert node is red
             node[node_index].color = 1;
             NormalInsertion();
-            //cout << node[node_index].dir << endl;
             Rotation(node_index);
         }
-        //cout << root << endl;
         getchar();
     }
     return;
@@ -214,6 +196,5 @@ void Print(int print_point, int depth){
 
 int main(){
     CreateTree();
-    //cout << node[root].child[1] << endl << endl;
     Print(root, 0);
 }
